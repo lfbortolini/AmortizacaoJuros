@@ -2,7 +2,8 @@ program SistemaAmortizacaoJuros;
 
 uses
   Forms,
-  uPrincipal in 'uPrincipal.pas' {mfPrincipal};
+  uPrincipal in 'src\uPrincipal.pas' {mfPrincipal},
+  uSimuladorFinanciamento in 'src\uSimuladorFinanciamento.pas' {SimuladorFinanciamento};
 
 {$R *.RES}
 

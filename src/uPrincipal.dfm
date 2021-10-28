@@ -21,9 +21,6 @@ object mfPrincipal: TmfPrincipal
     Top = 152
     object miSistemaPagamentoUnico: TMenuItem
       Caption = '&Sistema de Pagamento '#250'nico'
-      object miSimuladorFinanciamento: TMenuItem
-        Caption = '&Simulador de financiamento'
-      end
     end
   end
 end

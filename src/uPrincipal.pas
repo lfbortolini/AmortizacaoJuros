@@ -11,7 +11,6 @@ type
   TmfPrincipal = class(TForm)
     mmPrincipal: TMainMenu;
     miSistemaPagamentoUnico: TMenuItem;
-    miSimuladorFinanciamento: TMenuItem;
   private
     { Private declarations }
   public

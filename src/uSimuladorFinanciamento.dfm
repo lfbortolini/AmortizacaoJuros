@@ -91,8 +91,6 @@ object SimuladorFinanciamento: TSimuladorFinanciamento
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 96
-    ExplicitHeight = 486
     object lvDemostracao: TListView
       Left = 0
       Top = 0
@@ -142,10 +140,6 @@ object SimuladorFinanciamento: TSimuladorFinanciamento
           TitleImage = -1
         end>
       HotTrack = True
-      Items.ItemData = {
-        05400000000100000000000000FFFFFFFFFFFFFFFF0400000000000000000000
-        00013000013100F09BEC4C01320020D6EC4C013300E0D7EC4C013400C850C44A
-        FFFFFFFFFFFFFFFF}
       GroupView = True
       RowSelect = True
       TabOrder = 0

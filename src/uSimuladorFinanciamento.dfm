@@ -91,63 +91,17 @@ object SimuladorFinanciamento: TSimuladorFinanciamento
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    object lvDemostracao: TListView
+    object mmDetalhes: TMemo
       Left = 0
       Top = 0
       Width = 992
       Height = 539
       Align = alClient
-      Columns = <
-        item
-          Caption = 'Per'#237'odo'
-        end
-        item
-          Caption = 'Juros'
-        end
-        item
-          Caption = 'Amortiza'#231#227'o Saldo Devedor'
-        end
-        item
-          Caption = 'Pagamento'
-        end
-        item
-          Caption = 'Saldo Devedor'
-        end>
-      GridLines = True
-      Groups = <
-        item
-          Header = 'Defini'#231#245'es'
-          GroupID = 0
-          State = [lgsNormal]
-          HeaderAlign = taLeftJustify
-          FooterAlign = taLeftJustify
-          TitleImage = -1
-        end
-        item
-          Header = 'Detalhes'
-          GroupID = 1
-          State = [lgsNormal]
-          HeaderAlign = taLeftJustify
-          FooterAlign = taLeftJustify
-          TitleImage = -1
-        end
-        item
-          Header = 'Totalizador'
-          GroupID = 2
-          State = [lgsNormal]
-          HeaderAlign = taLeftJustify
-          FooterAlign = taLeftJustify
-          TitleImage = -1
-        end>
-      HotTrack = True
-      GroupView = True
-      RowSelect = True
       TabOrder = 0
-      ViewStyle = vsReport
-      ExplicitLeft = 140
-      ExplicitTop = 118
-      ExplicitWidth = 250
-      ExplicitHeight = 150
+      ExplicitLeft = 204
+      ExplicitTop = 224
+      ExplicitWidth = 185
+      ExplicitHeight = 89
     end
   end
 end

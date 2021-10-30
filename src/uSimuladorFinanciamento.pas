@@ -17,7 +17,7 @@ type
     Label3: TLabel;
     mePeriodos: TMaskEdit;
     btnSimular: TButton;
-    lvDemostracao: TListView;
+    mmDetalhes: TMemo;
   private
     { Private declarations }
   public

@@ -1,7 +1,7 @@
-object SimuladorFinanciamento: TSimuladorFinanciamento
+object SistemaPagamentoUnico: TSistemaPagamentoUnico
   Left = 0
   Top = 0
-  Caption = 'Simulador de financiamento'
+  Caption = 'Sistema de Pagamento '#250'nico'
   ClientHeight = 582
   ClientWidth = 992
   Color = clBtnFace
@@ -13,6 +13,7 @@ object SimuladorFinanciamento: TSimuladorFinanciamento
   FormStyle = fsMDIChild
   OldCreateOrder = False
   Visible = True
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object pCabecalho: TPanel
@@ -98,10 +99,6 @@ object SimuladorFinanciamento: TSimuladorFinanciamento
       Height = 539
       Align = alClient
       TabOrder = 0
-      ExplicitLeft = 204
-      ExplicitTop = 224
-      ExplicitWidth = 185
-      ExplicitHeight = 89
     end
   end
 end

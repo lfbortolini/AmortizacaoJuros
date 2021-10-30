@@ -14,13 +14,15 @@ object mfPrincipal: TmfPrincipal
   Menu = mmPrincipal
   OldCreateOrder = False
   Position = poDefault
+  WindowState = wsMaximized
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object mmPrincipal: TMainMenu
     Left = 286
     Top = 152
-    object miSistemaPagamentoUnico: TMenuItem
-      Caption = '&Sistema de Pagamento '#250'nico'
+    object miAmortizacaoJuros: TMenuItem
+      Caption = '&Amortiza'#231#227'o de juros'
     end
   end
 end

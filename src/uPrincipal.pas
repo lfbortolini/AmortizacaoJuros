@@ -10,9 +10,11 @@ uses Winapi.Windows, System.SysUtils, System.Classes, Vcl.Graphics, Vcl.Forms,
 type
   TmfPrincipal = class(TForm)
     mmPrincipal: TMainMenu;
-    miSistemaPagamentoUnico: TMenuItem;
+    miAmortizacaoJuros: TMenuItem;
+    procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure CriarItensMenu;
+    procedure CriarServico(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -23,5 +25,39 @@ var
 implementation
 
 {$R *.dfm}
+
+uses
+  uSimuladorFinanciamento.Service,
+  uSimuladorFinanciamento.Controller,
+  uSistemaPagamentoUnico;
+
+procedure TmfPrincipal.CriarItensMenu;
+var
+  oService: TSimuladorFinanciamentoServiceClass;
+  oMenuItem: TMenuItem;
+begin
+  for oService in TSimuladorFinanciamentoController.Instancia.GetServices do
+  begin
+    oMenuItem := mmPrincipal.CreateMenuItem;
+    oMenuItem.Caption := oService.GetNomeServico;
+    oMenuItem.Tag := LongInt(oService);
+    oMenuItem.OnClick := CriarServico;
+
+    miAmortizacaoJuros.Add(oMenuItem);
+  end;
+end;
+
+procedure TmfPrincipal.CriarServico(Sender: TObject);
+var
+  oService: TSimuladorFinanciamentoServiceClass;
+begin
+  oService := TSimuladorFinanciamentoServiceClass(LongInt(TMenuItem(Sender).Tag));
+  TSistemaPagamentoUnico.CriarFormulario(Self, oService);
+end;
+
+procedure TmfPrincipal.FormCreate(Sender: TObject);
+begin
+  CriarItensMenu;
+end;
 
 end.

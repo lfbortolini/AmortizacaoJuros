@@ -2,11 +2,12 @@ unit uSimuladorFinanciamento.Service;
 
 interface
 
-uses
-  uSimuladorFinanciamento.Service.API;
-
 type
-  TSimuladorFinanciamentoService = class(TInterfacedObject, ISimuladorFinanciamentoServiceAPI)
+  TSimuladorFinanciamentoServiceClass = class of TSimuladorFinanciamentoService;
+
+  TSimuladorFinanciamentoService = class(TObject)
+  public
+    class function GetNomeServico: String; virtual; abstract;
   end;
 
 implementation

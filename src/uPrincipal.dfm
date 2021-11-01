@@ -4,7 +4,7 @@ object mfPrincipal: TmfPrincipal
   Caption = 'PoC Sistema de Amortiza'#231#227'o Juros'
   ClientHeight = 557
   ClientWidth = 1065
-  Color = clAppWorkSpace
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlack
   Font.Height = -11

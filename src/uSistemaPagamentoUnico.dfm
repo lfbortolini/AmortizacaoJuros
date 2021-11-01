@@ -20,85 +20,133 @@ object SistemaPagamentoUnico: TSistemaPagamentoUnico
     Left = 0
     Top = 0
     Width = 992
-    Height = 43
+    Height = 54
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    object Label1: TLabel
-      Left = 10
-      Top = 22
-      Width = 37
-      Height = 13
-      Caption = 'Capital:'
-    end
-    object Label2: TLabel
-      Left = 150
-      Top = 22
-      Width = 72
-      Height = 13
-      Caption = 'Taxa de Juros:'
-    end
-    object Label3: TLabel
-      Left = 286
-      Top = 22
-      Width = 45
-      Height = 13
-      Caption = 'Per'#237'odos:'
-    end
-    object meCapital: TMaskEdit
-      Left = 49
-      Top = 14
-      Width = 88
-      Height = 21
-      EditMask = '###,###,##0.00'
-      MaxLength = 14
-      TabOrder = 0
-      Text = '   ,   ,   .  '
-    end
-    object meTaxaJuro: TMaskEdit
-      Left = 224
-      Top = 14
-      Width = 45
-      Height = 21
-      EditMask = '###,00'
-      MaxLength = 6
-      TabOrder = 1
-      Text = '   ,  '
-    end
-    object mePeriodos: TMaskEdit
-      Left = 337
-      Top = 14
-      Width = 28
-      Height = 21
-      EditMask = '###'
-      MaxLength = 3
-      TabOrder = 2
-      Text = '   '
-    end
     object btnSimular: TButton
-      Left = 378
-      Top = 12
-      Width = 75
+      Left = 268
+      Top = 20
+      Width = 79
       Height = 25
       Caption = 'Simular'
       TabOrder = 3
+      OnClick = btnSimularClick
+    end
+    object leCapital: TLabeledEdit
+      Left = 12
+      Top = 24
+      Width = 121
+      Height = 21
+      Alignment = taRightJustify
+      EditLabel.Width = 33
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Capital'
+      TabOrder = 0
+    end
+    object leTaxaJuro: TLabeledEdit
+      Left = 146
+      Top = 24
+      Width = 53
+      Height = 21
+      Alignment = taRightJustify
+      EditLabel.Width = 53
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Taxa Juros'
+      TabOrder = 1
+    end
+    object lePeriodo: TLabeledEdit
+      Left = 214
+      Top = 24
+      Width = 41
+      Height = 21
+      Alignment = taRightJustify
+      EditLabel.Width = 41
+      EditLabel.Height = 13
+      EditLabel.Caption = 'Periodos'
+      TabOrder = 2
     end
   end
   object pCorpo: TPanel
     Left = 0
-    Top = 43
+    Top = 54
     Width = 992
-    Height = 539
+    Height = 528
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    object mmDetalhes: TMemo
+    ExplicitTop = 43
+    ExplicitHeight = 539
+    object lvDetalhes: TListView
       Left = 0
       Top = 0
       Width = 992
-      Height = 539
+      Height = 528
       Align = alClient
+      Columns = <
+        item
+          AutoSize = True
+          Caption = 'Per'#237'odo'
+        end
+        item
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Juros'
+        end
+        item
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Amortiza'#231#227'o Saldo devedor'
+        end
+        item
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Pagamento'
+        end
+        item
+          Alignment = taCenter
+          AutoSize = True
+          Caption = 'Saldo devedor'
+        end>
+      ColumnClick = False
+      Groups = <
+        item
+          Header = 'Defini'#231#245'es'
+          GroupID = 0
+          State = [lgsNormal]
+          HeaderAlign = taLeftJustify
+          FooterAlign = taLeftJustify
+          TitleImage = -1
+        end
+        item
+          Header = 'Per'#237'odos'
+          GroupID = 1
+          State = [lgsNormal]
+          HeaderAlign = taLeftJustify
+          FooterAlign = taLeftJustify
+          TitleImage = -1
+        end
+        item
+          Header = 'Totalizador'
+          GroupID = 2
+          State = [lgsNormal]
+          HeaderAlign = taLeftJustify
+          FooterAlign = taLeftJustify
+          TitleImage = -1
+        end>
+      HotTrack = True
+      HotTrackStyles = [htHandPoint]
+      Items.ItemData = {
+        052C0000000100000000000000FFFFFFFFFFFFFFFF0200000000000000000000
+        00013000013000C0CE144F00B09A144FFFFFFFFF}
+      GroupView = True
+      RowSelect = True
       TabOrder = 0
+      ViewStyle = vsReport
+      ExplicitLeft = 240
+      ExplicitTop = 176
+      ExplicitWidth = 250
+      ExplicitHeight = 150
     end
   end
 end

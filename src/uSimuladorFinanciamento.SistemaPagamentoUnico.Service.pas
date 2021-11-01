@@ -4,30 +4,77 @@ interface
 
 uses
   uSimuladorFinanciamento.Service,
-  uSimuladorFinanciamento.Service.API;
+  uSimuladorFinanciamento.Periodos;
 
 type
-  TSistemaPagamentoUnicoService = class(TSimuladorFinanciamentoService, ISimuladorFinanciamentoServiceAPI)
+  TSistemaPagamentoUnicoService = class(TSimuladorFinanciamentoService)
   private
-    [Volatile] FRefCount: Integer;
-
     const C_NOME_SERVICO = 'Sistema de Pagamento único';
   protected
     class constructor Create;
   public
     class function GetNomeServico: String; override;
+    class function LazyLoadIt: TSimuladorFinanciamentoService; override;
 
-    function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
-    function _AddRef: Integer; stdcall;
-    function _Release: Integer; stdcall;
+    function CalcularFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaPeriodos; override;
+    function CalcularTotaisFinanciamento: TPeriodo; override;
   end;
 
 implementation
 
 uses
-  uSimuladorFinanciamento.Controller;
+  uSimuladorFinanciamento.Controller,
+  Math;
 
 { TSistemaPagamentoUnicoService }
+
+function TSistemaPagamentoUnicoService.CalcularFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaPeriodos;
+var
+  I: SmallInt;
+  oListaPeriodos: TListaPeriodos;
+  oPeriodo, oPeriodoAtual: TPeriodo;
+begin
+  Capital := peCapital;
+  TaxaJuro := peTaxaJuro;
+  TotalJuros := 0;
+  Periodo := pePeriodo;
+
+  oListaPeriodos := TListaPeriodos.Create;
+
+  // Adiciona a primeiro periodo onde temos somente o saldo devedor
+  oPeriodo := TPeriodo.Create;
+  oPeriodo.SaldoDevedor := Capital;
+  oListaPeriodos.Add(oPeriodo);
+
+  for I := 1 to Periodo do
+  begin
+    oPeriodoAtual := TPeriodo.Create;
+    oPeriodoAtual.Periodo := I;
+    oPeriodoAtual.Amortizacao := 0;
+    oPeriodoAtual.Pagamento := 0;
+    oPeriodoAtual.Juros := RoundTo((oPeriodo.SaldoDevedor * (1 + (TaxaJuro / 100))) - oPeriodo.SaldoDevedor, -2);
+    oPeriodoAtual.SaldoDevedor := oPeriodo.SaldoDevedor + oPeriodoAtual.Juros;
+
+    oListaPeriodos.Add(oPeriodoAtual);
+
+    oPeriodo := oPeriodoAtual;
+
+    TotalJuros := TotalJuros + oPeriodoAtual.Juros;
+
+    if (i = Periodo) then
+      oPeriodoAtual.SaldoDevedor := 0;
+  end;
+
+  oPeriodo.Pagamento := oPeriodo.SaldoDevedor;
+  oPeriodo.Amortizacao := Capital;
+
+  Result := oListaPeriodos;
+end;
+
+function TSistemaPagamentoUnicoService.CalcularTotaisFinanciamento: TPeriodo;
+begin
+  Result := TPeriodo.Create(0, TotalJuros, Capital, Capital + TotalJuros, 0);
+end;
 
 class constructor TSistemaPagamentoUnicoService.Create;
 begin
@@ -39,32 +86,9 @@ begin
   Result := C_NOME_SERVICO;
 end;
 
-function TSistemaPagamentoUnicoService.QueryInterface(const IID: TGUID; out Obj): HResult;
+class function TSistemaPagamentoUnicoService.LazyLoadIt: TSimuladorFinanciamentoService;
 begin
-  if GetInterface(IID, Obj) then
-    Result := 0
-  else
-    Result := E_NOINTERFACE;
-end;
-
-function TSistemaPagamentoUnicoService._AddRef: Integer;
-begin
-{$IFNDEF AUTOREFCOUNT}
-  Result := AtomicIncrement(FRefCount);
-{$ELSE}
-  Result := __ObjAddRef;
-{$ENDIF}
-end;
-
-function TSistemaPagamentoUnicoService._Release: Integer;
-begin
-{$IFNDEF AUTOREFCOUNT}
-  Result := AtomicDecrement(FRefCount);
-  if Result = 0 then
-    Destroy;
-{$ELSE}
-  Result := __ObjRelease;
-{$ENDIF}
+  Result := TSistemaPagamentoUnicoService.Create;
 end;
 
 end.

@@ -3,7 +3,8 @@ unit uSimuladorFinanciamento.Service;
 interface
 
 uses
-  uSimuladorFinanciamento.Periodos;
+  uSimuladorFinanciamento.Periodos,
+  uSimuladorFinanciamento.Erros;
 
 type
   TSimuladorFinanciamentoServiceClass = class of TSimuladorFinanciamentoService;
@@ -25,6 +26,7 @@ type
 
     function CalcularFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaPeriodos; virtual; abstract;
     function CalcularTotaisFinanciamento: TPeriodo; virtual; abstract;
+    function ValidarDadosFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaErros; virtual; abstract;
   end;
 
 implementation

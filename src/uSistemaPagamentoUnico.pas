@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
   uSimuladorFinanciamento.Service,
-  uSimuladorFinanciamento.Periodos, Vcl.Grids;
+  uSimuladorFinanciamento.Periodos,
+  uSimuladorFinanciamento.Erros;
 
 type
   TSistemaPagamentoUnico = class(TForm)
@@ -26,6 +27,7 @@ type
     class constructor Create;
     procedure SimularPagamentoUnico;
     procedure ExibirDadosPagamentoUnico(poListaPeriodos: TListaPeriodos);
+    procedure ExibirMensagemErroPagamentoUnico(poListaErros: TListaErros);
   protected
     procedure InicializarFormulario;
 
@@ -108,6 +110,12 @@ begin
   oPeriodo.Free;
 end;
 
+procedure TSistemaPagamentoUnico.ExibirMensagemErroPagamentoUnico(poListaErros: TListaErros);
+begin
+  MessageBox(Handle, PChar(poListaErros.ToMessage), 'Aviso', MB_OK);
+  leCapital.SetFocus;
+end;
+
 procedure TSistemaPagamentoUnico.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
@@ -128,18 +136,30 @@ var
   nCapital, nTaxaJuro: Extended;
   nPeriodos: SmallInt;
   oListaPeriodos: TListaPeriodos;
+  oListaErros: TListaErros;
 begin
   nCapital := StrToFloatDef(leCapital.Text, 0.0);
   nTaxaJuro := StrToFloatDef(leTaxaJuro.Text, 0.0);
   nPeriodos := StrToIntDef(lePeriodo.Text, 0);
 
-  // Fazer validações no serviço
+  try
+    oListaErros := FServico.ValidarDadosFinanciamento(nCapital, nTaxaJuro, nPeriodos);
 
-  oListaPeriodos := FServico.CalcularFinanciamento(nCapital, nTaxaJuro, nPeriodos);
+    if oListaErros.Count > 0 then
+    begin
+      ExibirMensagemErroPagamentoUnico(oListaErros);
+      Exit;
+    end;
+  finally
+    FreeAndNil(oListaErros);
+  end;
 
-  ExibirDadosPagamentoUnico(oListaPeriodos);
-
-  FreeAndNil(oListaPeriodos);
+  try
+    oListaPeriodos := FServico.CalcularFinanciamento(nCapital, nTaxaJuro, nPeriodos);
+    ExibirDadosPagamentoUnico(oListaPeriodos);
+  finally
+    FreeAndNil(oListaPeriodos);
+  end;
 end;
 
 end.

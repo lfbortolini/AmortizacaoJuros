@@ -4,7 +4,8 @@ interface
 
 uses
   uSimuladorFinanciamento.Service,
-  uSimuladorFinanciamento.Periodos;
+  uSimuladorFinanciamento.Periodos,
+  uSimuladorFinanciamento.Erros;
 
 type
   TSistemaPagamentoUnicoService = class(TSimuladorFinanciamentoService)
@@ -18,6 +19,7 @@ type
 
     function CalcularFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaPeriodos; override;
     function CalcularTotaisFinanciamento: TPeriodo; override;
+    function ValidarDadosFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaErros; override;
   end;
 
 implementation
@@ -89,6 +91,24 @@ end;
 class function TSistemaPagamentoUnicoService.LazyLoadIt: TSimuladorFinanciamentoService;
 begin
   Result := TSistemaPagamentoUnicoService.Create;
+end;
+
+function TSistemaPagamentoUnicoService.ValidarDadosFinanciamento(const peCapital, peTaxaJuro: Extended; const pePeriodo: SmallInt): TListaErros;
+var
+  oListaErros: TListaErros;
+begin
+  oListaErros := TListaErros.Create;
+
+  if (peCapital <= 0) then
+    oListaErros.Add('O campo "Capital" deve ter valor superior a 0.');
+
+  if (peTaxaJuro <= 0) or (peTaxaJuro >= 100) then
+    oListaErros.Add('O campo "Taxa Juros" deve ter um valor superior a 0 e inferior 100.');
+
+  if (pePeriodo <= 0) then
+    oListaErros.Add('O campo "Períodos" deve ter um valor superior a 0.');
+
+  Result := oListaErros;
 end;
 
 end.

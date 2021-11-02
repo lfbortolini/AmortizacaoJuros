@@ -7,7 +7,8 @@ uses
   uSimuladorFinanciamento.Controller in 'src\uSimuladorFinanciamento.Controller.pas',
   uSimuladorFinanciamento.Periodos in 'src\uSimuladorFinanciamento.Periodos.pas',
   uSimuladorFinanciamento.Service in 'src\uSimuladorFinanciamento.Service.pas',
-  uSimuladorFinanciamento.SistemaPagamentoUnico.Service in 'src\uSimuladorFinanciamento.SistemaPagamentoUnico.Service.pas';
+  uSimuladorFinanciamento.SistemaPagamentoUnico.Service in 'src\uSimuladorFinanciamento.SistemaPagamentoUnico.Service.pas',
+  uSimuladorFinanciamento.Erros in 'src\uSimuladorFinanciamento.Erros.pas';
 
 {$R *.RES}
 

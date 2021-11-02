@@ -75,8 +75,6 @@ object SistemaPagamentoUnico: TSistemaPagamentoUnico
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 43
-    ExplicitHeight = 539
     object lvDetalhes: TListView
       Left = 0
       Top = 0

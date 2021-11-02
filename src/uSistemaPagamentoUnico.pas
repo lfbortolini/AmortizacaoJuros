@@ -30,9 +30,8 @@ type
     procedure ExibirMensagemErroPagamentoUnico(poListaErros: TListaErros);
   protected
     procedure InicializarFormulario;
-
-    destructor Destroy; override;
   public
+    destructor Destroy; override;
     class function CriarFormulario(poMainForm: TForm; poServico: TSimuladorFinanciamentoServiceClass): TSistemaPagamentoUnico;
   end;
 
@@ -83,9 +82,9 @@ var
   begin
     oListItem := lvDetalhes.Items.Add;
     oListItem.Caption := psCapiton;
-    oListItem.SubItems.Add(poPeriodo.JurosToString);
-    oListItem.SubItems.Add(poPeriodo.AmortizacaoToString);
-    oListItem.SubItems.Add(poPeriodo.PagamentoToString);
+    oListItem.SubItems.Add(poPeriodo.ValorJurosToString);
+    oListItem.SubItems.Add(poPeriodo.ValorAmortizacaoToString);
+    oListItem.SubItems.Add(poPeriodo.ValorPagamentoToString);
     oListItem.SubItems.Add(poPeriodo.SaldoDevedorToString);
     oListItem.Data := nil;
 
@@ -107,7 +106,7 @@ begin
   oPeriodo := FServico.CalcularTotaisFinanciamento;
   AdicionarItemLista('Totais', oPeriodo);
 
-  oPeriodo.Free;
+  FreeAndNil(oPeriodo);
 end;
 
 procedure TSistemaPagamentoUnico.ExibirMensagemErroPagamentoUnico(poListaErros: TListaErros);

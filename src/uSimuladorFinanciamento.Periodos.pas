@@ -10,18 +10,18 @@ type
   TPeriodo = class
   protected
     FPeriodo: SmallInt;
-    FJuros: Extended;
-    FAmortizacao: Extended;
-    FPagamento: Extended;
+    FValorJuros: Extended;
+    FValorAmortizacao: Extended;
+    FValorPagamento: Extended;
     FSaldoDevedor: Extended;
   public
     property Periodo: SmallInt read FPeriodo write FPeriodo;
-    property Juros: Extended read FJuros write FJuros;
-    property Amortizacao: Extended read FAmortizacao write FAmortizacao;
-    property Pagamento: Extended read FPagamento write FPagamento;
+    property ValorJuros: Extended read FValorJuros write FValorJuros;
+    property ValorAmortizacao: Extended read FValorAmortizacao write FValorAmortizacao;
+    property ValorPagamento: Extended read FValorPagamento write FValorPagamento;
     property SaldoDevedor: Extended read FSaldoDevedor write FSaldoDevedor;
   public
-    constructor Create(const psPeriodo: SmallInt; const peJuros, peAmortizacao, pePagamento, peSaldoDevedor: Extended); reintroduce; overload; virtual;
+    constructor Create(const psPeriodo: SmallInt; const peValorJuros, peValorAmortizacao, peValorPagamento, peSaldoDevedor: Extended); reintroduce; overload; virtual;
     constructor Create; reintroduce; overload; virtual;
   end;
 
@@ -33,9 +33,9 @@ type
   TPeriodoHelper = class helper for TPeriodo
   public
     function PeriodoToString: string;
-    function JurosToString: string;
-    function AmortizacaoToString: string;
-    function PagamentoToString: string;
+    function ValorJurosToString: string;
+    function ValorAmortizacaoToString: string;
+    function ValorPagamentoToString: string;
     function SaldoDevedorToString: string;
   end;
 
@@ -48,13 +48,13 @@ begin
   Create(0, 0, 0, 0, 0);
 end;
 
-constructor TPeriodo.Create(const psPeriodo: SmallInt; const peJuros, peAmortizacao, pePagamento, peSaldoDevedor: Extended);
+constructor TPeriodo.Create(const psPeriodo: SmallInt; const peValorJuros, peValorAmortizacao, peValorPagamento, peSaldoDevedor: Extended);
 begin
   inherited Create;
   FPeriodo := psPeriodo;
-  FJuros := peJuros;
-  FAmortizacao := peAmortizacao;
-  FPagamento := pePagamento;
+  FValorJuros := peValorJuros;
+  FValorAmortizacao := peValorAmortizacao;
+  FValorPagamento := peValorPagamento;
   FSaldoDevedor := peSaldoDevedor;
 end;
 
@@ -73,19 +73,19 @@ end;
 
 { TPeriodoHelper }
 
-function TPeriodoHelper.AmortizacaoToString: string;
+function TPeriodoHelper.ValorAmortizacaoToString: string;
 begin
-  Result := FormatCurr(',0.00', Self.Amortizacao);
+  Result := FormatCurr(',0.00', Self.ValorAmortizacao);
 end;
 
-function TPeriodoHelper.JurosToString: string;
+function TPeriodoHelper.ValorJurosToString: string;
 begin
-  Result := FormatCurr(',0.00', Self.Juros);
+  Result := FormatCurr(',0.00', Self.ValorJuros);
 end;
 
-function TPeriodoHelper.PagamentoToString: string;
+function TPeriodoHelper.ValorPagamentoToString: string;
 begin
-  Result := FormatCurr(',0.00', Self.Pagamento);
+  Result := FormatCurr(',0.00', Self.ValorPagamento);
 end;
 
 function TPeriodoHelper.PeriodoToString: string;

@@ -15,8 +15,6 @@ type
   private
     procedure CriarItensMenu;
     procedure CriarServico(Sender: TObject);
-  public
-    { Public declarations }
   end;
 
 var

@@ -13,12 +13,12 @@ type
   private
     FCapital: Extended;
     FTaxaJuro: Extended;
-    FTotalJuros: Extended;
+    FValorTotalJuros: Extended;
     FPeriodo: SmallInt;
   public
     property Capital: Extended read FCapital write FCapital;
     property TaxaJuro: Extended read FTaxaJuro write FTaxaJuro;
-    property TotalJuros: Extended read FTotalJuros write FTotalJuros;
+    property ValorTotalJuros: Extended read FValorTotalJuros write FValorTotalJuros;
     property Periodo: SmallInt read FPeriodo write FPeriodo;
   public
     class function GetNomeServico: String; virtual; abstract;

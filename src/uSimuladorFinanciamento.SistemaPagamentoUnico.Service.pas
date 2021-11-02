@@ -38,8 +38,8 @@ var
 begin
   Capital := peCapital;
   TaxaJuro := peTaxaJuro;
-  TotalJuros := 0;
   Periodo := pePeriodo;
+  ValorTotalJuros := 0;
 
   oListaPeriodos := TListaPeriodos.Create;
 
@@ -52,30 +52,30 @@ begin
   begin
     oPeriodoAtual := TPeriodo.Create;
     oPeriodoAtual.Periodo := I;
-    oPeriodoAtual.Amortizacao := 0;
-    oPeriodoAtual.Pagamento := 0;
-    oPeriodoAtual.Juros := RoundTo((oPeriodo.SaldoDevedor * (1 + (TaxaJuro / 100))) - oPeriodo.SaldoDevedor, -2);
-    oPeriodoAtual.SaldoDevedor := oPeriodo.SaldoDevedor + oPeriodoAtual.Juros;
+    oPeriodoAtual.ValorAmortizacao := 0;
+    oPeriodoAtual.ValorPagamento := 0;
+    oPeriodoAtual.ValorJuros := RoundTo((oPeriodo.SaldoDevedor * (1 + (TaxaJuro / 100))) - oPeriodo.SaldoDevedor, -2);
+    oPeriodoAtual.SaldoDevedor := oPeriodo.SaldoDevedor + oPeriodoAtual.ValorJuros;
 
     oListaPeriodos.Add(oPeriodoAtual);
 
     oPeriodo := oPeriodoAtual;
 
-    TotalJuros := TotalJuros + oPeriodoAtual.Juros;
+    ValorTotalJuros := ValorTotalJuros + oPeriodoAtual.ValorJuros;
 
     if (i = Periodo) then
       oPeriodoAtual.SaldoDevedor := 0;
   end;
 
-  oPeriodo.Pagamento := oPeriodo.SaldoDevedor;
-  oPeriodo.Amortizacao := Capital;
+  oPeriodo.ValorPagamento := oPeriodo.SaldoDevedor;
+  oPeriodo.ValorAmortizacao := Capital;
 
   Result := oListaPeriodos;
 end;
 
 function TSistemaPagamentoUnicoService.CalcularTotaisFinanciamento: TPeriodo;
 begin
-  Result := TPeriodo.Create(0, TotalJuros, Capital, Capital + TotalJuros, 0);
+  Result := TPeriodo.Create(0, ValorTotalJuros, Capital, Capital + ValorTotalJuros, 0);
 end;
 
 class constructor TSistemaPagamentoUnicoService.Create;
